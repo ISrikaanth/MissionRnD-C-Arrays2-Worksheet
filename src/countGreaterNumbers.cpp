@@ -20,6 +20,54 @@ struct transaction {
 	char description[20];
 };
 
-int countGreaterNumbers(struct transaction *Arr, int len, char *date) {
-	return -1;
+int countGreaterNumbers(struct transaction *Arr, int len, char *date) 
+{
+	int i = 0, count = 0, year = 0, month = 0, dat = 0, j = 0, year1 = 0, month1 = 0, dat1 = 0;
+	while (date[j] != '-')
+	{
+		dat1 = (dat1 * 10) + (date[j] - '0');
+		j++;
+	}
+	j++;
+	while (date[j] != '-')
+	{
+		month1 = (month1 * 10) + (date[j] - '0');
+		j++;
+	}
+	j++;
+	while (date[j] != '\0')
+	{
+		year1 = (year1 * 10) + (date[j] - '0');
+		j++;
+	}
+	j = 0;
+	for (i = 0; i < len; i++)
+	{
+		while (date[j] != '-')
+		{
+			dat = (dat * 10) + ((Arr[i].date[j]) - '0');
+			j++;
+		}
+		j++;
+		while (date[j] != '-')
+		{
+			month = (month * 10) + ((Arr[i].date[j]) - '0');
+			j++;
+		}
+		j++;
+		while (date[j] != '\0')
+		{
+			year = (year * 10) + ((Arr[i].date[j]) - '0');
+			j++;
+		}
+		if (year > year1)
+			count = count + 1;
+		else if ((month > month1) && (year == year1))
+			count = count + 1;
+		else if ((dat > dat1) && (month == month1) && (year == year1))
+			count = count + 1;
+		j = 0;
+		dat = month = year = 0;
+	}
+	return count;
 }
