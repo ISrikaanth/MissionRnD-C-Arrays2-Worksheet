@@ -17,13 +17,53 @@ NOTES:
 */
 
 #include <iostream>
-
+#include <stdlib.h>
+using namespace std;
 struct transaction {
 	int amount;
 	char date[11];
 	char description[20];
 };
-
-struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen, struct transaction *B, int BLen) {
-	return NULL;
+int strcompare(char *a, char *b);
+struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen, struct transaction *B, int BLen) 
+{
+	if ((A == NULL) || (B == NULL))
+		return NULL;
+	struct transaction * t;
+	t = (struct transaction *)malloc(10 * sizeof(struct transaction));
+	int i, j,k=0,m=0;
+	for (i = 0; i < ALen; i++)
+	{
+		for (j = 0; j < BLen; j++)
+		{
+			if (strcompare(A[i].date,B[j].date)==1)
+			{
+				t[k].amount = A[i].amount;
+				for (m = 0; m < 10;m++)
+				   t[k].date[m] = A[i].date[m];
+				t[k].date[m] = '\0';
+				for (m = 0; m < 10; m++)
+					t[k].description[m] = A[i].description[m];
+				t[k].description[m] = '\0';
+				k++;
+			}
+		}
+	}
+	if (k == 0)
+		return NULL;
+	return t;
+}
+int strcompare(char *a, char *b)
+{
+	int i = 0;
+	while (i < 10)
+	{
+		if (a[i] != b[i])
+			break;
+		i++;
+	}
+	if (i >= 10)
+		return 1;
+	else
+		return 0;
 }

@@ -21,7 +21,117 @@ struct transaction {
 	char date[11];
 	char description[20];
 };
-
-struct transaction * mergeSortedArrays(struct transaction *A, int ALen, struct transaction *B, int BLen) {
-	return NULL;
+int strcompare1(char *a, char *b);
+struct transaction * mergeSortedArrays(struct transaction *A, int ALen, struct transaction *B, int BLen)
+{
+	if ((A == NULL) || (B == NULL))
+		return NULL;
+	struct transaction *t;
+	t = (struct transaction *)malloc(30 * sizeof(struct transaction));
+	int i = 0, j = 0,k=0,m=0;
+	while ((i < ALen) && (j < BLen))
+	{
+		if ((strcompare1(A[i].date, B[j].date) == 0))
+		{
+			t[k].amount = A[i].amount;
+			for (m = 0; m < 10; m++)
+				t[k].date[m] = A[i].date[m];
+			t[k].date[m] = '\0';
+			for (m = 0; m < 10; m++)
+				t[k].description[m] = A[i].description[m];
+			t[k].description[m] = '\0';
+			k++;
+			i++;
+		}
+		else
+		{
+			t[k].amount = B[j].amount;
+			for (m = 0; m < 10; m++)
+				t[k].date[m] = B[j].date[m];
+			t[k].date[m] = '\0';
+			for (m = 0; m < 10; m++)
+				t[k].description[m] = B[j].description[m];
+			t[k].description[m] = '\0';
+			k++;
+			j++;
+		}
+	}
+	while (i < ALen)
+	{
+		t[k].amount = A[i].amount;
+		for (m = 0; m < 10; m++)
+			t[k].date[m] = A[i].date[m];
+		t[k].date[m] = '\0';
+		for (m = 0; m < 10; m++)
+			t[k].description[m] = A[i].description[m];
+		t[k].description[m] = '\0';
+		k++;
+		i++;
+	}
+	while (j < BLen)
+	{
+		t[k].amount = B[j].amount;
+		for (m = 0; m < 10; m++)
+			t[k].date[m] = B[j].date[m];
+		t[k].date[m] = '\0';
+		for (m = 0; m < 10; m++)
+			t[k].description[m] = B[j].description[m];
+		t[k].description[m] = '\0';
+		k++;
+		j++;
+	}
+	return t;
+}
+int strcompare1(char *a, char *b)
+{
+	int d1 = 0, m1 = 0, yr1 = 0, d2 = 0, m2 = 0, yr2 = 0,i=0;
+	while (a[i] != '-')
+	{
+		d1 = (d1 * 10) + (a[i] - '0');
+		i++;
+	}
+	i++;
+	while (a[i] != '-')
+	{
+		m1 = (m1 * 10) + (a[i] - '0');
+		i++;
+	}
+	i++;
+	while (a[i] != '\0')
+	{
+		yr1 = (yr1 * 10) + (a[i] - '0');
+		i++;
+	}
+	i = 0;
+	while (b[i] != '-')
+	{
+		d2 = (d2 * 10) + (b[i] - '0');
+		i++;
+	}
+	i++;
+	while (b[i] != '-')
+	{
+		m2 = (m2 * 10) + (b[i] - '0');
+		i++;
+	}
+	i++;
+	while (b[i] != '\0')
+	{
+		yr2 = (yr2 * 10) + (b[i] - '0');
+		i++;
+	}
+	if (yr1 < yr2)
+		return 0;
+	else if (yr1 > yr2)
+		return 1;
+	else if (m1 < m2)
+		return 0;
+	else if (m1 > m2)
+		return 1;
+	else if (d1 < d2)
+		return 0;
+	else if (d1 > d2)
+		return 0;
+	else
+		return 0;
 }

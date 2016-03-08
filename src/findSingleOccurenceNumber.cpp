@@ -15,6 +15,13 @@ There are better ways of solving the problem than a brute-force solution which i
 complexity .
 */
 
-int findSingleOccurenceNumber(int *A, int len) {
+int findSingleOccurenceNumber(int *A, int len)
+{
+	int i,pos;
+	for (i = 0; i < len; i++)
+	{
+		pos = A[i];
+
+	}
 	return -1;
 }
